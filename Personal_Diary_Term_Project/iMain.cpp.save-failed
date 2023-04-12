@@ -1,0 +1,1419 @@
+# include "iGraphics.h"
+
+int x = 0, y = 0, length = 1000, height = 1000;
+char strID[100], strID1[100],strPASS[100],strPASS1[100],PASSstar[100],name1[100],name[100];
+char confPASS[100],confPASSstar[100],confPASS1[100];
+char IDread[100],PASSread[100];
+char strdate[100],strdate1[100],strtext[20][63];
+char filename[100]={0};
+int i,len,len2=0,len1,len3=0,len4,len5=0,len6,len7=0,len8,len9=0,len10[20]={0},cng=0;
+int mode,mode1,mode3,mode4,mode5,mode6=0;
+///mode=userID,mode1=password,mode3=confirm password,mode4=name,mode5=date
+int SignupLogin=0,login=1,signup=2,help=3,about=4,menu=5;
+int enterentry=6,editentry=7,delentry=8,moodchart=9,input=10;
+int moods=11,showentry=12,logout=13,activities=14,writing_text=15,confirmation=16,confirmation2=17;
+int window=writing_text;
+int mood=0,activity=0;
+//int window=SignupLogin;
+int error=0,lenERR=0,loginerror=0,dateerror=0,dateerror1=0;
+int IDcomp=4,PASScomp=4;
+
+int dateerror2(char *dateerror1);
+
+/*void ShowEntry()
+{
+    FILE *moodfp;
+    FILE *actfp;
+    FILE *textfp;
+
+    int mood1;
+
+    strcpy(filename,strID1);
+    strcat(filename,strdate1);
+    strcat(filename,".txt");
+
+    moodfp=fopen(filename,"w+" );
+    fscanf(moodfp,"%d",mood1);
+    printf("%d",mood1);
+
+    fclose(moodfp);
+} */
+void entrydate()
+{
+    iClear();
+    iSetColor(204,153,255);
+    iFilledRectangle(x,y,length,height);
+
+    iSetColor(0,0,0);
+    iText(100,500,"PLEASE ENTER THE DATE IN DD.MM.YYYY",GLUT_BITMAP_TIMES_ROMAN_24);
+    iSetColor(255,255,255);
+    iFilledRectangle(250,400,250,50);
+
+    if (mode5==1)
+    {
+        iSetColor(0,255,255);
+        iFilledRectangle(250,400,250,50);
+    }
+    iSetColor(0,0,0);
+    iText(260,415 , strdate ,GLUT_BITMAP_TIMES_ROMAN_24);
+    iSetColor(255,255,255);
+    iFilledRectangle(450,300,100,40);
+    iSetColor(0,0,0);
+    iText(375,380,"(ENTER TO FINISH)");
+    iText(460,310,"LET'S GO",GLUT_BITMAP_HELVETICA_18);
+    dateerror=0;
+    dateerror=dateerror2(strdate1);
+    if(dateerror1==1){
+        if (dateerror>0)
+            iText(150,250,"PLEASE ENTER A VALID DATE",GLUT_BITMAP_TIMES_ROMAN_24);
+        if (dateerror==0&&strlen(strdate1)==10){
+                if(window==delentry)
+                {
+                    /*len8=0;
+                    len9=0;
+                    //printf("%s\n",strdate);
+                    *strdate='\0';
+                    *strdate1='\0';
+                    printf("%s",strdate);*/
+                    dateerror1=0;
+                    mode5=0;
+                    window=confirmation2;
+                }
+
+                else if(window==editentry||window==enterentry)
+                {
+                    /*len8=0;
+                    len9=0;
+                    *strdate='\0';
+                    *strdate1='\0';*/
+                    dateerror1=0;
+                    mode5=0;
+                    window=input;
+                }
+
+                else if(window==showentry)
+                {
+                    /*len8=0;
+                    len9=0;
+                    *strdate='\0';
+                    *strdate1='\0';*/
+                    dateerror1=0;
+                    mode5=0;
+                    window=input;
+                }
+
+            }
+       }
+}
+
+void drawTextBoxID()
+{
+	iSetColor(275, 275, 275);
+	iFilledRectangle(300, 318, 250, 30);
+}
+void drawTextBoxPass()
+{
+	iSetColor(275, 275, 275);
+	iFilledRectangle(300, 268, 250, 30);
+}
+int dateerror2(char *strdate1)
+{
+    int dateerror=0;
+    if((strdate1[3]=='1'&&strdate1[4]>'2')||(strdate1[3]=='0'&&strdate1[4]=='0')||strdate1[3]>49||(strdate1[0]==48&&strdate1[1]==48))
+            {
+                dateerror++;
+            }
+            else if (strdate1[0]>51)
+                dateerror++;
+            else if (strdate1[3]=='0' && strdate1[4]=='1')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='2')
+            {
+                if (strdate1[0]==50 &&strdate1[1]>56)
+                dateerror++;
+            }else if (strdate1[3]=='0' && strdate1[4]=='3')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='4')
+            {
+                if (strdate1[0]==51&&strdate1[1]>48)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='5')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='6')
+            {
+                if (strdate1[0]==51&&strdate1[1]>48)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='7')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='8')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='0' && strdate1[4]=='9')
+            {
+                if (strdate1[0]==51&&strdate1[1]>48)
+                dateerror++;
+            }
+            else if (strdate1[3]=='1' && strdate1[4]=='0')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else if (strdate1[3]=='1' && strdate1[4]=='1')
+            {
+                if (strdate1[0]==51&&strdate1[1]>48)
+                dateerror++;
+            }
+            else if (strdate1[3]=='1' && strdate1[4]=='2')
+            {
+                if (strdate1[0]==51&&strdate1[1]>49)
+                dateerror++;
+            }
+            else dateerror=0;
+            return dateerror;
+}
+void iDraw()
+ {
+    iClear();
+
+    if (window==SignupLogin)
+    {
+        iClear();
+
+        iSetColor(153, 255, 153);
+	    iFilledRectangle(x,y,length,height);
+
+        iSetColor(255,255,255);
+        iFilledRectangle(225,500,250,40);
+        iFilledRectangle(225,400,250,40);
+        iFilledRectangle(225,300,250,40);
+        iFilledRectangle(225,200,250,40);
+
+        iSetColor(0,0,255);
+        iText(130, 600, "WELCOME TO YOUR PERSONAL DIARY", GLUT_BITMAP_TIMES_ROMAN_24);
+
+        iSetColor(0,0,0);
+        iText(297, 510, "SIGN UP",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(300, 410, "LOG IN",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(308, 310, "HELP",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(300, 210, "ABOUT",GLUT_BITMAP_TIMES_ROMAN_24);
+    }
+    if(window==login)
+    {
+
+	iClear();
+
+	iSetColor(102, 178, 255);
+	iFilledRectangle(x,y,length,height);
+	iSetColor(255, 255, 255);
+    drawTexture(100,600,modes[0]);
+	drawTexture(350,600,modes[1]);
+	drawTexture(600,600,modes[2]);
+
+	drawTextBoxID();
+	drawTextBoxPass();
+
+    iSetColor(0, 0, 0);
+    iText(320, 323, strID,GLUT_BITMAP_TIMES_ROMAN_24);
+
+    iSetColor(0, 0, 0);
+    iText(320, 273, PASSstar ,GLUT_BITMAP_TIMES_ROMAN_24);
+
+	iSetColor(0, 0, 0);
+	iText(130, 325, "USER ID", GLUT_BITMAP_TIMES_ROMAN_24);
+	iText(560,320,"(enter to finish)");
+	iText(90, 275, "PASSWORD", GLUT_BITMAP_TIMES_ROMAN_24);
+    iText(560,270,"(enter to finish)");
+
+	iSetColor(275, 275, 275);
+	iFilledRectangle(250, 198, 185, 30);
+	iSetColor(0, 0, 0);
+	iText(295, 205, "LOG IN", GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+	FILE *IDfile1;
+	IDfile1=fopen("user id.txt","r+");
+	fscanf(IDfile1,"%s",IDread);
+
+	if (strlen(IDread)==0)
+    {
+        IDcomp=4;
+    }
+    else
+    {
+        IDcomp=strcmp(IDread,strID1);
+    }
+    fclose(IDfile1);
+
+    FILE *passfile1;
+	passfile1=fopen("PASSWORD.txt","r+");
+	fscanf(passfile1,"%s",PASSread);
+
+	if (strlen(PASSread)==0)
+    {
+         PASScomp=4;
+    }
+    else
+    {
+        PASScomp=strcmp(PASSread,strPASS1);
+    }
+    fclose(passfile1);
+
+    if (loginerror>0)
+    {
+        iText(150,150,"CHECK YOUR USER ID AND PASSWORD AGAIN!!",GLUT_BITMAP_HELVETICA_18);
+    }
+
+        iSetColor(255,255,255);
+        iFilledRectangle(620,30,70,30);
+        iSetColor(0,0,0);
+        iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+    }
+    if (window==about)
+    {
+        iClear();
+
+        iSetColor(255, 204, 153);
+	    iFilledRectangle(x,y,length,height);
+	    iSetColor(0, 0, 0);
+	    iText(200,600,"DEVELOPED BY",GLUT_BITMAP_TIMES_ROMAN_24);
+	    iText(200,500,"PRANTIK PAUL (1705071)",GLUT_BITMAP_HELVETICA_18);
+	    iText(200,450,"MD. KAMRUJJAMAN (1705081)",GLUT_BITMAP_HELVETICA_18);
+	    iText(200,400,"TANVIR RAIHAN (1705064)",GLUT_BITMAP_HELVETICA_18);
+	    iText(200,300,"SUPERVISED BY",GLUT_BITMAP_TIMES_ROMAN_24);
+	    iText(200,250,"MD. SHOHRAB HOSSAIN",GLUT_BITMAP_HELVETICA_18);
+	    iText(200,200,"ASSOCIATE PROFESSOR",GLUT_BITMAP_HELVETICA_18);
+        iText(200,150,"DEPARTMENT OF CSE,BUET.",GLUT_BITMAP_HELVETICA_18);
+        iSetColor(255,255,255);
+        iFilledRectangle(620,30,70,30);
+        iSetColor(0,0,0);
+        iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+
+    }
+
+    if (window == signup)
+    {
+        iClear();
+
+        iSetColor(225, 127, 212);
+	    iFilledRectangle(x,y,length,height);
+
+	    iSetColor(0,0,0);
+        iText(100,600,"ENTER YOUR NAME  :",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(100,525,"USER ID                         :",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(100,450,"PASSWORD                   :",GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(100,375,"CONFIRM PASSWORD:",GLUT_BITMAP_TIMES_ROMAN_24);
+
+        iSetColor(255,255,255);
+        iFilledRectangle(360,595,250,40);//name
+        iText(360,575,"(press enter to finish)");
+        iFilledRectangle(360,520,250,40);//user id
+        iText(360,500,"(press enter to finish)");
+        iFilledRectangle(360,445,250,40);//password
+        iText(360,425,"(press enter to finish)");
+        iFilledRectangle(360,370,250,40);//confirm password
+        iText(360,350,"(press enter to finish)");
+        iFilledRectangle(240,200,150,30);
+
+        iSetColor(0,0,0);
+        iText(260,205,"CONFIRM",GLUT_BITMAP_TIMES_ROMAN_24);
+
+        if (mode4==1)
+        {
+            iSetColor(0,255,255);
+            iFilledRectangle(360,595,250,40);
+        }
+        if (mode==1)
+        {
+            iSetColor(0,255,255);
+            iFilledRectangle(360,520,250,40);
+        }
+        if (mode1==1)
+        {
+            iSetColor(0,255,255);
+            iFilledRectangle(360,445,250,40);
+        }
+        if (mode3==1)
+        {
+            iSetColor(0,255,255);
+            iFilledRectangle(360,370,250,40);
+        }
+
+
+        iSetColor(0, 0, 0);
+        iText(365,598 , name,GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(365, 523, strID ,GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(365, 448, PASSstar,GLUT_BITMAP_TIMES_ROMAN_24);
+        iText(365, 373, confPASSstar ,GLUT_BITMAP_TIMES_ROMAN_24);
+
+        if (error>0)
+        {
+            iText(100,300,"BOTH PASSWORDS ARE NOT SAME!!",GLUT_BITMAP_TIMES_ROMAN_24);
+            error++;
+            mode=0;
+            mode4=0;
+        }
+
+        if (lenERR>0)
+        {
+            iText(50,150,"YOU NEED TO ENTER AT LEAST FIVE CHARACTER IN EACH FIELD",GLUT_BITMAP_HELVETICA_18);
+        }
+
+        FILE *namefile;
+        namefile=fopen("user name.txt","w+");
+        fprintf(namefile,"%s",name1);
+        fclose(namefile);
+
+        FILE *IDfile;
+        IDfile=fopen("user ID.txt","w+");
+        fprintf(IDfile,"%s",strID1);
+        fclose(IDfile);
+
+        FILE *passfile;
+        passfile=fopen("PASSWORD.txt","w+");
+        fprintf(passfile,"%s",strPASS1);
+        fclose(passfile);
+
+        iSetColor(255,255,255);
+        iFilledRectangle(620,30,70,30);
+        iSetColor(0,0,0);
+        iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+    }
+
+        if (window == menu)
+        {
+            iClear();
+
+            iSetColor(255,219,77);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(150,500,400,60);
+            iFilledRectangle(150,400,400,60);
+            iFilledRectangle(150,300,400,60);
+            iFilledRectangle(150,200,400,60);
+            iFilledRectangle(150,100,400,60);
+            iFilledRectangle(150,10,400,60);
+
+
+            iSetColor(0,0,0);
+            iFilledRectangle(280,600,120,60);
+            iSetColor(255,51,51);
+            iText(300,620,"MENU",GLUT_BITMAP_TIMES_ROMAN_24);
+            iSetColor(0,0,0);
+            iText(265,520 , "ENTER ENTRY",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(275,420 , "EDIT ENTRY",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(255,320 , "DELETE ENTRY",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(245,220 , "SEE MOOD CHART",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(255,120 , "SHOW ENTRIES",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(280,30 , "LOG OUT",GLUT_BITMAP_TIMES_ROMAN_24);
+        }
+
+        if (window==help)
+        {
+            iClear();
+
+            iSetColor(252, 145, 137);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(0,0,0);
+            iText(10,650,"Sign up with your name, User ID, password. You must remember them as you will",GLUT_BITMAP_HELVETICA_18);
+            iText(10,630,"need them every time you log in.",GLUT_BITMAP_HELVETICA_18);
+            iText(10,600,"You can enter, edit or delete your entries from the main menu. Enter the date",GLUT_BITMAP_HELVETICA_18);
+            iText(10,580,"and write your feelings. You can select the happy, OK or sad icons according to",GLUT_BITMAP_HELVETICA_18);
+            iText(10,560,"your mode of the day. You can also select your daily activities.",GLUT_BITMAP_HELVETICA_18);
+            iText(10,530,"You can see weekly mood chart according to your moods on the day of the week",GLUT_BITMAP_HELVETICA_18);
+            iText(10,510,"from the main menu.",GLUT_BITMAP_HELVETICA_18);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+        }
+
+        if (window==enterentry)
+        {
+            iClear();
+
+            entrydate();
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+
+        }
+
+        if (window==editentry)
+        {
+            iClear();
+
+            entrydate();
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+        }
+        if (window==delentry)
+        {
+            iClear();
+
+            entrydate();
+
+        }
+
+        if (window==input)
+        {
+            iClear();
+
+            iSetColor(179,179,255);
+            iFilledCircle(x,y,length,height);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(150,500,400,60);
+            iFilledRectangle(150,350,400,60);
+            iFilledRectangle(150,200,400,60);
+
+            iSetColor(0,0,0);
+            iText(265,520,"EDIT MOODS",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(240,370,"ENTER ACTIVITIES",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(290,225,"WRITE",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+        }
+
+        if (window==confirmation)
+        {
+            iClear();
+
+            iSetColor(255,255,77);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(0,0,0);
+            iText(150,500,"ARE YOU SURE YOU WANT TO QUIT?",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            iSetColor(77,255,77);
+            iFilledRectangle(200,350,100,50);
+            iSetColor(255,26,26);
+            iFilledRectangle(400,350,100,50);
+
+            iSetColor(255,255,255);
+            iText(230,365,"YES",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(430,365,"NO",GLUT_BITMAP_TIMES_ROMAN_24);
+
+        }
+        if (window==confirmation2)
+        {
+            iClear();
+
+            iSetColor(128,204,255);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(0,0,0);
+            iText(100,500,"DO YOU REALLY WANT TO ERASE THIS ENTRY?",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            iSetColor(77,255,77);
+            iFilledRectangle(200,350,100,50);
+            iSetColor(255,26,26);
+            iFilledRectangle(400,350,100,50);
+
+            iSetColor(255,255,255);
+            iText(230,365,"YES",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(430,365,"NO",GLUT_BITMAP_TIMES_ROMAN_24);
+
+        }
+
+        if (window==logout)
+        {
+            iClear();
+
+            iSetColor(102,204,153);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(0,0,0);
+            iText(150,500,"THANKS FOR USING THE DIARY!",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(205,400,"HOPE YOU LIKE IT.",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(215,300,"SEE YOU AGAIN!!",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"finish",GLUT_BITMAP_HELVETICA_18);
+        }
+
+        if (window==moods)
+        {
+            iClear();
+
+            iSetColor(204,255,255);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(255, 255, 255);
+            drawTexture(150,400,modes[0]);
+            drawTexture(150,250,modes[1]);
+            drawTexture(150,100,modes[2]);
+
+            iSetColor(0,0,0);
+            iFilledRectangle(130,550,450,60);
+            iSetColor(255,51,51);
+            iText(155,568,"SELECT YOUR MOOD FOR TODAY",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            iSetColor(0,0,0);
+            iText(240,410,"HAPPY!",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(240,260,"OKAY!",GLUT_BITMAP_TIMES_ROMAN_24);
+            iText(240,110,"SAD!",GLUT_BITMAP_TIMES_ROMAN_24);
+
+            strcpy(filename,strID1);
+            strcat(filename,strdate1);
+            strcat(filename,".txt");
+            //printf("%s\n",filename);
+            FILE *moodfp=fopen(filename,"w");
+            if(mood==1){
+                fprintf(moodfp,"1");
+            }
+            if(mood==2){
+                fprintf(moodfp,"2");
+            }
+            if(mood==3){
+                fprintf(moodfp,"3");
+            }
+
+            fclose(moodfp);
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+
+        }
+
+        if (window==activities)
+        {
+            iClear();
+
+            iSetColor(255,228,196);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(0,0,0);
+            iText(150,600,"SELECT YOUR TODAY'S ACTIVITIES",GLUT_BITMAP_TIMES_ROMAN_24);
+            ///adding activities image
+            iSetColor(255,255,255);
+            drawTexture(50,500,modes[4]);
+            drawTexture(50,400,modes[6]);
+            drawTexture(50,300,modes[7]);
+            drawTexture(50,200,modes[10]);
+            drawTexture(50,100,modes[11]);
+            drawTexture(600,500,modes[15]);
+            drawTexture(600,400,modes[16]);
+            drawTexture(600,300,modes[19]);
+            drawTexture(600,200,modes[21]);
+            drawTexture(600,100,modes[30]);
+            drawTexture(300,500,modes[22]);
+            drawTexture(300,300,modes[28]);
+            drawTexture(300,100,modes[12]);
+
+            FILE *activityfp;
+            strcpy(filename,strID1);
+            strcat(filename,strdate1);
+            strcat(filename,"act.txt");
+            activityfp=fopen(filename,"w");
+            if(activity==1){
+                fprintf(activityfp,"1");
+            }
+            if(activity==2){
+                fprintf(activityfp,"2");
+            }
+            if(activity==3){
+                fprintf(activityfp,"3");
+            }
+            if(activity==4){
+                fprintf(activityfp,"4");
+            }
+            if(activity==5){
+                fprintf(activityfp,"5");
+            }
+            if(activity==6){
+                fprintf(activityfp,"6");
+            }
+            if(activity==7){
+                fprintf(activityfp,"7");
+            }
+            if(activity==8){
+                fprintf(activityfp,"8");
+            }
+            if(activity==9){
+                fprintf(activityfp,"9");
+            }
+            if(activity==10){
+                fprintf(activityfp,"10");
+            }
+            if(activity==11){
+                fprintf(activityfp,"11");
+            }
+            if(activity==12){
+                fprintf(activityfp,"12");
+            }
+            if(activity==13){
+                fprintf(activityfp,"13");
+            }
+            fclose(activityfp);
+
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+        }
+
+        if (window==showentry)
+        {
+            iClear();
+
+            entrydate();
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+
+        }
+
+        if(window==writing_text)
+        {
+            iClear();
+
+            iSetColor(255,128,255);
+            iFilledRectangle(x,y,length,height);
+
+            iSetColor(153,0,153);
+            iText(150,650,"Click on the box to start writing",GLUT_BITMAP_TIMES_ROMAN_24);
+            iSetColor(255,255,255);
+            iFilledRectangle(15,600-(cng*30),670,(cng+1)*30);
+            iSetColor(0,0,0);
+            int i;
+            for(i=0;i<=cng;i++){
+                iText(30,(600-(i*30)+10),strtext[i]);
+            }
+            //iText(30,610,"kamrul");
+            iSetColor(255,255,255);
+            iFilledRectangle(620,30,70,30);
+            iSetColor(0,0,0);
+            iText(630,40,"return",GLUT_BITMAP_HELVETICA_18);
+        }
+
+
+
+}
+
+/*
+	function iMouseMove() is called when the user presses and drags the mouse.
+	(mx, my) is the position where the mouse pointer is.
+	*/
+void iMouseMove(int mx, int my) {
+	printf("x = %d, y= %d\n",mx,my);
+
+}
+
+/*
+	function iMouse() is called when the user presses/releases the mouse.
+	(mx, my) is the position where the mouse pointer is.
+	*/
+void iMouse(int button, int state, int mx, int my) {
+        if (window==login){
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		if(mx >= 300 && mx <= 550 && my >= 318 && my <= 348 && mode == 0)
+		{
+			mode = 1;
+            len2++;
+		}
+
+		if(mx >= 300 && mx <= 550 && my >= 268 && my <= 318 && mode1 == 0)
+		{
+			mode1 = 1;
+            len3++;
+		}
+		if(mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+		{
+			window=SignupLogin;
+		}
+
+		if(mx >= 250 && mx <= 435 && my >= 198 && my <= 228 && IDcomp==0 && PASScomp==0)
+		{
+		    mx=800;
+		    my=800;
+			window=menu;
+			loginerror=0;
+			//printf("%d",window);
+		}
+		else if(mx >= 250 && mx <= 435 && my >= 198 && my <= 228)
+        {
+            loginerror++;
+        }
+	  }
+
+	}
+	if (window==SignupLogin)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            if(mx >= 225 && mx <= 475 && my >= 500 && my <= 540)
+            {
+                mx=800;
+                my=800;
+                window=signup;
+            }
+            if(mx >= 225 && mx <= 475 && my >= 400 && my <= 440)
+            {
+                mx=800;
+                my=800;
+                window=login;
+            }
+            if(mx >= 225 && mx <= 475 && my >= 300 && my <= 340)
+            {
+                mx=800;
+                my=800;
+                window=help;
+            }
+            if(mx >= 225 && mx <= 475 && my >= 200 && my <= 240)
+            {
+                mx=800;
+                my=800;
+                window=about;
+            }
+      }
+    }
+    if (window==signup)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            if(mx >= 360 && mx <= 610 && my >= 595 && my <= 625 && mode4 == 0)
+            {
+                mode4 = 1;
+                mode=0;
+                mode1=0;
+                mode3=0;
+                len7++;
+            }
+            if(mx >= 360 && mx <= 610 && my >= 520 && my <= 560 && mode == 0)
+            {
+                mode = 1;
+                mode4=0;
+                mode1=0;
+                mode3=0;
+                len2++;
+            }
+            if(mx >= 360 && mx <= 610 && my >= 445 && my <= 485 && mode1 == 0)
+            {
+                mode1 = 1;
+                mode4=0;
+                mode=0;
+                mode3=0;
+                len3++;
+            }
+            if(mx >= 360 && mx <= 610 && my >= 370 && my <= 410 && mode3 == 0)
+            {
+                mode3 = 1;
+                mode4=0;
+                mode=0;
+                mode1=0;
+                len5++;
+            }
+            if(mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=SignupLogin;
+            }
+            if(mx >= 240 && mx <= 390 && my >= 200 && my <= 230 && strlen(strID1) > 4 && strlen(strPASS1) > 4 && strlen(name1) > 4)
+            {
+                lenERR=0;
+                if(strcmp(confPASS1,strPASS1)==0)
+                {
+                    error=0;
+                    mode=0;
+                    mode1=0;
+                    mode3=0;
+                    mode4=0;
+                    mx=800;
+                    my=800;
+                    window=login;
+                }
+                else
+                {
+                    error++;
+                }
+            }
+            else if(mx >= 240 && mx <= 390 && my >= 200 && my <= 230)
+            {
+                lenERR++;
+            }
+
+        }
+    }
+    if (window==help)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            if(mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+                {
+                    mx=800;
+                    my=800;
+                    window=SignupLogin;
+                }
+            }
+    }
+    if (window==about)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            if(mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=SignupLogin;
+            }
+        }
+    }
+    if (window==menu)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            if(mx >= 150 && mx <= 550 && my >= 500 && my <= 560)
+            {
+                mx=800;
+                my=800;
+                window=enterentry;
+            }
+        if(mx >= 150 && mx <= 550 && my >= 400 && my <= 460)
+		{
+		    mx=800;
+		    my=800;
+			window=editentry;
+		}
+        if(mx >= 150 && mx <= 550 && my >= 300 && my <= 360)
+		{
+		    mx=800;
+		    my=800;
+			window=delentry;
+		}
+		if(mx >= 150 && mx <= 550 && my >= 200 && my <= 260)
+		{
+		    mx=800;
+		    my=800;
+			window=moodchart;
+		}
+		if(mx >= 150 && mx <= 550 && my >= 100 && my <= 160)
+		{
+		    mx=800;
+		    my=800;
+			window=showentry;
+		}
+		if(mx >= 150 && mx <= 550 && my >= 10 && my <= 70)
+		{
+		    mx=800;
+		    my=800;
+			window=confirmation;
+		}
+
+      }
+    }
+
+    if (window==enterentry)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 250 && mx <= 500 && my >= 400 && my <= 450 && mode5 == 0)
+            {
+                mode5 = 1;
+                len9++;
+            }
+
+            if(mx >= 450 && mx <= 550 && my >= 300 && my <= 340)
+            {
+                mx=800;
+                my=800;
+                dateerror1=1;
+            }
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+
+            }
+        }
+
+    }
+
+    if (window==editentry)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 250 && mx <= 500 && my >= 400 && my <= 450 && mode5 == 0)
+            {
+                mode5 = 1;
+                len9++;
+            }
+
+            if(mx >= 450 && mx <= 550 && my >= 300 && my <= 340)
+            {
+                mx=800;
+                my=800;
+                dateerror1=1;
+            }
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+
+            }
+        }
+
+    }
+
+
+    if (window==delentry)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 250 && mx <= 500 && my >= 400 && my <= 450 && mode5 == 0)
+            {
+                mode5 = 1;
+                len9++;
+            }
+
+            if(mx >= 450 && mx <= 550 && my >= 300 && my <= 340)
+            {
+                mx=800;
+                my=800;
+                dateerror1=1;
+            }
+        }
+
+    }
+
+    if (window==input)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 150 && mx <= 550 && my >= 500 && my <= 560)
+            {
+                mx=800;
+                my=800;
+                window=moods;
+            }
+            if (mx >= 150 && mx <= 550 && my >= 350 && my <= 410)
+            {
+                mx=800;
+                my=800;
+                window=activities;
+            }
+            if (mx >= 150 && mx <= 550 && my >= 200 && my <= 260)
+            {
+                mx=800;
+                my=800;
+                window=writing_text;
+            }
+
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+            }
+        }
+
+    }
+    if (window==confirmation)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 400 && mx <= 500 && my >= 350 && my <= 400)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+            }
+
+            if (mx >= 200 && mx <= 300 && my >= 350 && my <= 400)
+            {
+                mx=800;
+                my=800;
+                window=logout;
+            }
+        }
+    }
+    if (window==confirmation2)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 400 && mx <= 500 && my >= 350 && my <= 400)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+            }
+
+            if (mx >= 200 && mx <= 300 && my >= 350 && my <= 400)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+
+            }
+        }
+    }
+    if (window==logout)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+               exit(0);
+            }
+        }
+    }
+
+    if (window==moods)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 150 && mx <= 214 && my >= 400 && my <= 464)
+            {
+                mood=1;
+            }
+
+            if (mx >= 150 && mx <= 214 && my >= 250 && my <= 314)
+            {
+                mood=2;
+            }
+
+            if (mx >= 150 && mx <= 214 && my >= 100 && my <= 164)
+            {
+                mood=3;
+            }
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=input;
+
+            }
+        }
+    }
+
+    if (window==showentry)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 250 && mx <= 500 && my >= 400 && my <= 450 && mode5 == 0)
+            {
+                mode5 = 1;
+                len9++;
+            }
+
+            if(mx >= 450 && mx <= 550 && my >= 300 && my <= 340)
+            {
+                mx=800;
+                my=800;
+                dateerror1=1;
+            }
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=menu;
+
+            }
+        }
+    }
+    if(window==activities)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 50 && mx <= 100 && my >= 500 && my <= 550 )
+            {
+                activity=1;
+            }
+
+            if(mx >= 50 && mx <= 100 && my >= 400 && my <= 450)
+            {
+                activity=2;
+            }
+
+            if(mx >= 50 && mx <= 100 && my >= 300 && my <= 350 )
+            {
+                activity=3;
+            }
+
+            if(mx >= 50 && mx <= 100 && my >= 200 && my <= 250)
+            {
+                activity=4;
+            }
+
+
+            if(mx >= 50 && mx <= 100 && my >= 100 && my <= 150)
+            {
+                activity=5;
+            }
+
+            if(mx >= 300 && mx <= 350 && my >= 500 && my <= 550)
+            {
+                activity=11;
+            }
+
+            if(mx >= 300 && mx <= 350 && my >= 300 && my <= 350)
+            {
+                activity=12;
+            }
+
+            if(mx >= 300 && mx <= 350 && my >= 100 && my <= 150)
+            {
+                activity=13;
+            }
+
+            if(mx >= 600 && mx <= 650 && my >= 500 && my <= 550)
+            {
+                activity=6;
+            }
+
+            if(mx >= 600 && mx <= 650 && my >= 400 && my <= 450)
+            {
+                activity=7;
+            }
+
+            if(mx >= 600 && mx <= 650 && my >= 300 && my <= 350)
+            {
+                activity=8;
+            }
+
+            if(mx >= 600 && mx <= 650 && my >= 200 && my <= 250)
+            {
+                activity=9;
+            }
+
+            if(mx >= 600 && mx <= 650 && my >= 100 && my <= 150)
+            {
+                activity=10;
+            }
+
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=input;
+            }
+        }
+
+    }
+    if(window==writing_text)
+    {
+
+       if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if(mx >= 15 && mx <= 685 && my >= 600 && my <= 630 )
+            {
+                mode6=1;
+            }
+        }
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        {
+            if (mx >= 620 && mx <= 690 && my >= 30 && my <= 60)
+            {
+                mx=800;
+                my=800;
+                window=input;
+            }
+        }
+    }
+
+}
+
+/*
+	function iKeyboard() is called whenever the user hits a key in keyboard.
+	key- holds the ASCII value of the key pressed.
+	*/
+void iKeyboard(unsigned char key) {
+
+
+	int i;
+	if(mode == 1)
+	{
+        if(key == '\r')
+		{
+			mode = 0;
+			strcpy(strID1, strID);
+			//printf("%s\n", strID1);
+			/*for(i = 0; i < len; i++)
+				strID[i] = 0;*/
+			//len = 0;
+		}
+		else if (mode!=0 && key==8)
+        {
+            if(len>0){
+            len--;
+            strID[len] = 0;
+            }
+        }
+		else if(len<10)
+		{
+			strID[len] = key;
+			len++;
+		}
+	}
+
+	if(mode1 == 1)
+	{
+
+        if(key == '\r')
+		{
+			mode1 = 0;
+			strcpy(strPASS1, strPASS);
+		}
+
+		else if (mode1!=0 && key==8)
+        {
+            if(len1>0){
+            len1--;
+            strPASS[len1] = 0;
+            PASSstar[len1]=0;
+            }
+        }
+
+		else if (len1<10)
+		{
+			strPASS[len1] = key;
+			PASSstar[len1]=42;
+			len1++;
+		}
+	}
+
+	if(mode4 == 1)
+	{
+
+        if(key == '\r')
+		{
+			mode4 = 0;
+			strcpy(name1, name);
+		}
+
+		else if (mode4!=0 && key==8)
+        {   if (len6>0){
+            len6--;
+            name[len6] = 0;
+        }
+        }
+
+		else if (len6<12)
+		{
+			name[len6] = key;
+			len6++;
+		}
+	}
+
+	if(mode3 == 1)
+	{
+
+        if(key == '\r')
+		{
+			mode3 = 0;
+			strcpy(confPASS1, confPASS);
+		}
+
+		else if (mode3!=0 && key==8)
+        {
+            if(len4>0)
+            {
+            len4--;
+            confPASS[len4] = 0;
+            confPASSstar[len4]=0;
+        }
+        }
+
+		else if (len4<10)
+		{
+			confPASS[len4] = key;
+			confPASSstar[len4]=42;
+			len4++;
+		}
+	}
+
+	if(mode5 == 1)
+	{
+
+        if(key == '\r')
+		{
+			mode5 = 0;
+			strcpy(strdate1, strdate);
+		}
+
+		else if (mode5!=0 && key==8)
+        {
+            if (len8>0){
+            len8--;
+            strdate[len8] = 0;
+            }
+        }
+
+		else if (len8<10 && ((key>47 && key<58)||key=='.'))
+		{
+			strdate[len8] = key;
+			len8++;
+		}
+
+	}
+
+	if(mode6 == 1)
+	{
+	    if(key=='\r'){
+			cng++;
+		}
+		else if (key==8)
+        {
+            if (len10>0){
+            len10[cng]--;
+            strtext[cng][len10[cng]]=0;
+            }
+        }
+	     else if (len10[cng]<62)
+		{
+		    if(len10[cng]==61) cng++;
+		    else {
+			strtext[cng][len10[cng]] = key;
+			len10[cng]++;
+		    }
+		    printf("%d",len10[cng]);
+		}
+	}
+
+
+}
+
+void iSpecialKeyboard(unsigned char key) {
+
+	if (key == GLUT_KEY_END) {
+		exit(0);
+	}
+}
+
+
+int main() {
+
+	len = 0, len1=0, len4=0, len6=0, len8= 0;
+	mode = 0, mode1 = 0, mode3 = 0,mode4 = 0, mode5 = 0;
+	strID[0]= 0, strPASS[0]= 0, confPASS1[0]= 0,name[0]=0, strdate[0]= 0;
+
+	iInitialize(700, 700, "My Personal Diary");
+    return 0;
+}
